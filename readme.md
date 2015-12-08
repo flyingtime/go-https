@@ -86,10 +86,10 @@
 	$openssl x509 -req -days 365 -sha256 -extensions v3_req -CA root.crt -CAkey root.key -CAcreateserial -in server.csr -out server.crt
 	```
 
-	需要输入根私钥密码
+	需要输入根私钥密码                                     
 	![](/res/7.png)                                          
 
-5. 客户端导入根证书并添加到“信任的根服务站点”
+5. 客户端导入根证书并添加到“信任的根服务站点”                                     
 	![](/res/8.png)                                   
 	![](/res/9.png)                               
 	![](/res/10.png)                       
