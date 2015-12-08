@@ -35,7 +35,7 @@
 	$openssl genrsa -des3 -out root.key 2048
 	```
 
-	需要输入两次私钥密码
+	需要输入两次私钥密码            
 	![](/res/1.png)
 2. 创建根证书的申请文件root.csr：
 
@@ -43,7 +43,7 @@
 	$openssl req -new -key root.key -out root.csr
 	```
 
-	输入root.key的密码
+	输入root.key的密码                             
 	![](/res/2.png)
 
 3. 创建根证书root.crt：
@@ -52,7 +52,7 @@
 	$openssl x509 -req -days 3650 -sha256 -extensions v3_ca -signkey root.key -in root.csr -out root.crt
 	```
 
-	生成根证书
+	生成根证书                                                        
 	![](/res/3.png)
 	
 ##三、SSL单向认证
@@ -62,7 +62,7 @@
 	$openssl genrsa –des3 -out server.key 2048
 	```
 
-	需要输入两次私钥密码
+	需要输入两次私钥密码                                    
 	![](/res/4.png)
 2. 去除key口令
 	
@@ -70,7 +70,7 @@
 	$openssl rsa -in server.key -out server.key
 	```
 
-	需要输入私钥密码  
+	需要输入私钥密码                                           
 	![](/res/5.png)
 3. 创建服务器证书申请文件server.csr
 
@@ -78,7 +78,7 @@
 	$openssl req -new -key server.key -out server.csr
 	```
 
-	"Common Name"最好跟网站的域名一致
+	"Common Name"最好跟网站的域名一致                           
 	![](/res/6.png)
 4. 创建服务器证书server.crt
 
@@ -87,17 +87,17 @@
 	```
 
 	需要输入根私钥密码
-	![](/res/7.png)
+	![](/res/7.png)                                          
 
 5. 客户端导入根证书并添加到“信任的根服务站点”
-	![](/res/8.png)
-	![](/res/9.png)
-	![](/res/10.png)
-	![](/res/11.png)
-	![](/res/12.png)
-	![](/res/13.png)
-	![](/res/14.png)
-	![](/res/15.png)
+	![](/res/8.png)                                   
+	![](/res/9.png)                               
+	![](/res/10.png)                       
+	![](/res/11.png)                            
+	![](/res/12.png)                           
+	![](/res/13.png)                                 
+	![](/res/14.png)                                   
+	![](/res/15.png)                                         
 6. golang实现简单的https服务器
 	
 	```Go
@@ -122,7 +122,7 @@
 
 	```
 
-7. 在浏览器中测试  
+7. 在浏览器中测试                                             
 	![](/res/16.png)	
 
 ##四、SSL双向认证
@@ -134,7 +134,7 @@
 	$openssl genrsa -des3 -out client.key 2048
 	```	
 
-	需要输入两次私钥密码   
+	需要输入两次私钥密码                                       
 	![](/res/17.png)
 2. 去除key口令
 	
@@ -142,7 +142,7 @@
 	$openssl rsa -in client.key -out client.key
 	```
 
-	需要输入私钥密码  
+	需要输入私钥密码                                           
 	![](/res/18.png)
 3. 创建客户端证书申请文件client.csr
 
@@ -150,7 +150,7 @@
 	$openssl req -new -key client.key -out client.csr
 	```
 
-	![](/res/19.png)
+	![](/res/19.png)                                      
 
 3. 创建客户端证书文件client.crt
 
@@ -158,18 +158,18 @@
 	$openssl x509 -req -days 365 -sha256 -extensions v3_req -CA root.crt -CAkey root.key -CAcreateserial -in client.csr -out client.crt
 	```
 
-	![](/res/20.png)
+	![](/res/20.png)                      
 4. 将客户端证书文件client.crt和客户端证书密钥文件client.key合并成客户端证书安装包client.pfx
 
 	```shell
 	$openssl pkcs12 -export -in client.crt -inkey client.key -out client.pfx
 	```	
 
-	设置客户端安装时的密码
+	设置客户端安装时的密码                                           
 	![](/res/23.png)
 2. 添加客户端证书
 
-	参见服务器端添加证书，客户端证书添加到“个人”里面就可以
+	参见服务器端添加证书，客户端证书添加到“个人”里面就可以                      
 	![](/res/21.png)
 3. 修改服务器代码
 	
@@ -218,7 +218,7 @@
 	}
 
 	```
-4. 在浏览器中测试  
+4. 在浏览器中测试                                                
 	![](/res/22.png)
 5. 使用golang访问https服务器
 
