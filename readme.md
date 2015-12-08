@@ -1,6 +1,7 @@
 #GOLANG搭建单、双向自认证HTTPS服务器
 ###前言
 >2015年双11期间淘宝、天猫实现了全站式https安全传输，web安全问题已经成了人们关注的话题，那什么是https呢？如何实现单、双向自认证https服务器呢？接下来我们将一一介绍。
+
 ##一、HTTPS相关概念已经认证流程
 ######基本概念：
 [**HTTPS**](http://baike.baidu.com/link?url=XuEFqp8HTAIWBO12QMzj54K1iIBGPL6VJGPEn85nyCirdG8LE104hMYvOeDgfucyMf3gu1zPLap3i0BKb-SKHa)（全称：Hyper Text Transfer Protocol over Secure Socket Layer），是以安全为目标的HTTP通道，简单讲是HTTP的安全版。即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。 它是一个URI scheme（抽象标识符体系），句法类同http:体系。用于安全的HTTP数据传输。https:URL表明它使用了HTTP，但HTTPS存在不同于HTTP的默认端口及一个加密/身份验证层（在HTTP与TCP之间）。这个系统的最初研发由网景公司(Netscape)进行，并内置于其浏览器Netscape Navigator中，提供了身份验证与加密通讯方法。现在它被广泛用于万维网上安全敏感的通讯，例如交易支付方面。关于https详细介绍请见：[大型网站的HTTPS实践](http://studygolang.com/articles/2984)。
@@ -99,7 +100,7 @@
 	![](/res/15.png)
 6. golang实现简单的https服务器
 	
-	```golang
+	```Go
 	package main
 
 	import (
@@ -172,7 +173,7 @@
 	![](/res/21.png)
 3. 修改服务器代码
 	
-	```golang
+	```Go
 	package main
 	
 	import (
@@ -221,7 +222,7 @@
 	![](/res/22.png)
 5. 使用golang访问https服务器
 
-	```golang
+	```Go
 	package main
 
 	import (
