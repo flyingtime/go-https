@@ -1,9 +1,9 @@
-#GOLANG搭建单、双向自认证HTTPS服务器
-###前言
+# GOLANG搭建单、双向自认证HTTPS服务器
+### 前言
 >2015年双11期间淘宝、天猫实现了全站式https安全传输，web安全问题已经成了人们关注的话题，那什么是https呢？如何实现单、双向自认证https服务器呢？接下来我们将一一介绍。
 
-##一、HTTPS相关概念已经认证流程
-######基本概念：
+## 一、HTTPS相关概念已经认证流程
+###### 基本概念：
 [**HTTPS**](http://baike.baidu.com/link?url=XuEFqp8HTAIWBO12QMzj54K1iIBGPL6VJGPEn85nyCirdG8LE104hMYvOeDgfucyMf3gu1zPLap3i0BKb-SKHa)（全称：Hyper Text Transfer Protocol over Secure Socket Layer），是以安全为目标的HTTP通道，简单讲是HTTP的安全版。即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。 它是一个URI scheme（抽象标识符体系），句法类同http:体系。用于安全的HTTP数据传输。https:URL表明它使用了HTTP，但HTTPS存在不同于HTTP的默认端口及一个加密/身份验证层（在HTTP与TCP之间）。这个系统的最初研发由网景公司(Netscape)进行，并内置于其浏览器Netscape Navigator中，提供了身份验证与加密通讯方法。现在它被广泛用于万维网上安全敏感的通讯，例如交易支付方面。关于https详细介绍请见：[大型网站的HTTPS实践](http://studygolang.com/articles/2984)。
 
 **SSL**(Secure Socket Layer)：是Netscape公司设计的主要用于WEB的安全传输协议。从名字就可以看出它在https协议栈中负责实现上面提到的加密层。
@@ -31,7 +31,7 @@
 ##二、自认证根证书
 1. 创建根证书密钥文件(自己做CA)root.key：
 
-	```shell
+	``` shell
 	$openssl genrsa -des3 -out root.key 2048
 	```
 
@@ -39,7 +39,7 @@
 	![](/res/1.png)
 2. 创建根证书的申请文件root.csr：
 
-	```shell
+	``` shell
 	$openssl req -new -key root.key -out root.csr
 	```
 
@@ -48,7 +48,7 @@
 
 3. 创建根证书root.crt：
 	
-	```shell
+	``` shell
 	$openssl x509 -req -days 3650 -sha256 -extensions v3_ca -signkey root.key -in root.csr -out root.crt
 	```
 
@@ -58,7 +58,7 @@
 ##三、SSL单向认证
 1. 创建服务器证书秘钥
 
-	```shell
+	``` shell
 	$openssl genrsa –des3 -out server.key 2048
 	```
 
@@ -66,7 +66,7 @@
 	![](/res/4.png)
 2. 去除key口令
 	
-	```shell
+	``` shell
 	$openssl rsa -in server.key -out server.key
 	```
 
@@ -74,7 +74,7 @@
 	![](/res/5.png)
 3. 创建服务器证书申请文件server.csr
 
-	```shell
+	``` shell
 	$openssl req -new -key server.key -out server.csr
 	```
 
@@ -82,7 +82,7 @@
 	![](/res/6.png)
 4. 创建服务器证书server.crt
 
-	```shell
+	``` shell
 	$openssl x509 -req -days 365 -sha256 -extensions v3_req -CA root.crt -CAkey root.key -CAcreateserial -in server.csr -out server.crt
 	```
 
@@ -100,7 +100,7 @@
 	![](/res/15.png)                                         
 6. golang实现简单的https服务器
 	
-	```Go
+	``` Go
 	package main
 
 	import (
@@ -130,7 +130,7 @@
 
 1. 创建客户端证书私钥
 
-	```shell
+	``` shell
 	$openssl genrsa -des3 -out client.key 2048
 	```	
 
@@ -138,7 +138,7 @@
 	![](/res/17.png)
 2. 去除key口令
 	
-	```shell
+	``` shell
 	$openssl rsa -in client.key -out client.key
 	```
 
@@ -146,7 +146,7 @@
 	![](/res/18.png)
 3. 创建客户端证书申请文件client.csr
 
-	```shell
+	``` shell
 	$openssl req -new -key client.key -out client.csr
 	```
 
@@ -154,14 +154,14 @@
 
 3. 创建客户端证书文件client.crt
 
-	```shell
+	``` shell
 	$openssl x509 -req -days 365 -sha256 -extensions v3_req -CA root.crt -CAkey root.key -CAcreateserial -in client.csr -out client.crt
 	```
 
 	![](/res/20.png)                      
 4. 将客户端证书文件client.crt和客户端证书密钥文件client.key合并成客户端证书安装包client.pfx
 
-	```shell
+	``` shell
 	$openssl pkcs12 -export -in client.crt -inkey client.key -out client.pfx
 	```	
 
@@ -173,7 +173,7 @@
 	![](/res/21.png)
 3. 修改服务器代码
 	
-	```Go
+	``` Go
 	package main
 	
 	import (
@@ -222,7 +222,7 @@
 	![](/res/22.png)
 5. 使用golang访问https服务器
 
-	```Go
+	``` Go
 	package main
 
 	import (
@@ -269,5 +269,5 @@
 
 	```	
 
-###结语
+### 结语
 希望通过这次实例能让大家更好的理解、应用https，谢谢观看。
